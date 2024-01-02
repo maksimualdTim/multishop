@@ -1,0 +1,112 @@
+@startuml
+
+class Product {
+	-name: String
+	-shortDescription: String
+	-description: String
+	-price: Money
+	-salesPrice: Money
+	-variations: List<ProductVariation>
+	-attributes: List<ProductAttribute>
+	-additionalInformation: String
+	-reviews: List<ProductReview>
+	-category: ProductCategory
+	-preview: Image
+	-gallery: List<Image>
+}
+
+class Money {
+	-amount: Integer,
+	-currency: Currency
+}
+
+class ProductVariation {
+	-name: String
+	-value: String
+}
+
+class ProductReview {
+	-customer: Customer
+	-rating: Integer
+	-comment: String
+	-createdDate: Date
+}
+
+class ProductAttribute {
+	-name: String
+	-value: String
+}
+
+class ProductCategory {
+	-childrenCategories: List<ProductCategory>
+	-products: List<Product>
+	-name: String
+}
+
+class Image {
+	-name: String
+	-relativePath: String
+}
+
+class CurrencyExchanger {
+	-rate: float
+	-targetCurrency: Currency
+	-sourceCurrency: Currency
+}
+class Customer {
+	-name: String
+	-avatar: Image
+	-email: String
+	-passwordHash: String
+}
+class Order {
+	-customer: Customer
+	-items: List<OrderItem>
+}
+class OrderItem {
+	-product: Product
+	-amount: Integer
+}
+
+class Cart {
+	-customer: Customer
+	-items: List<CartItem>
+}
+class CartItem {
+	-product: Product
+	-amount: Integer
+}
+
+class Favorite {
+	-customer: Customer
+	-items: List<CartItem>
+}
+class FavoriteItem {
+	-product: Product
+	-amount: Integer
+}
+
+Order o-- OrderItem
+OrderItem o-- Product
+
+Cart o-- CartItem
+CartItem o-- Product
+
+Favorite o-- FavoriteItem
+FavoriteItem o-- Product
+
+Product o-- Money
+Product o-- ProductVariation
+Product o-- ProductReview
+Product o-- ProductAttribute
+Product o-- ProductCategory
+Product o-- Image
+ProductCategory *-- Product
+
+ProductReview o-- Customer
+
+ProductCategory o-- ProductCategory
+ProductCategroy o-- Product
+
+Customer o-- Image
+@enduml
